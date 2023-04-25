@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
@@ -9,7 +9,6 @@ import { ContexProvider } from './contex/AuthContex';
 
 function App() {
   return (
-    <Router>
       <div className="container dark">
         <div className="App">
           <Header />
@@ -24,7 +23,6 @@ function App() {
           
         </div>
       </div>
-    </Router>
   );
 }
 

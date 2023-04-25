@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
+import AuthContex from '../contex/AuthContex'
 
 function PrivateRoutes() {
 
-  let auth = false
+  const {user} = useContext(AuthContex)
   
   return (
 
-    auth ? <Outlet />: <Navigate to='/' />
+    user ? <Outlet />: <Navigate to='/' />
       
   )
 }
