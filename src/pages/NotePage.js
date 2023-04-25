@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams,  useNavigate } from 'react-router-dom'
 import {ReactComponent as ArrowLeft} from '../assets/left-arrow2.svg'
+import AuthContex from '../contex/AuthContex'
 
 function NotePage() {
 
@@ -8,11 +9,21 @@ function NotePage() {
     let navigate = useNavigate()
     const [note, setNote] = useState({})
     const up = false
+    const {authToken} = useContext(AuthContex)
     
     const setData = async ()=>{
-        const response = await fetch(`/api/notes/${id}`)
+        const response = await fetch(`/api/notes/${id}`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':'Bearer ' + String(authToken.access)
+            }
+        })
         
         const data = await response.json()
+        if(data === "fail"){
+            navigate('/note')
+        }
         // console.log(data)
         setNote(data)
     }
@@ -22,7 +33,8 @@ function NotePage() {
         fetch(`/api/notes/${id}`,{
             'method': "PUT",
             'headers': {
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                'Authorization':'Bearer ' + String(authToken.access)
             },
             'body':JSON.stringify(note)
         })
@@ -32,7 +44,8 @@ function NotePage() {
         fetch(`/api/notes`,{
             'method': "POST",
             'headers': {
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                'Authorization':'Bearer ' + String(authToken.access)
             },
             'body':JSON.stringify(note)
         })
@@ -42,7 +55,8 @@ function NotePage() {
         fetch(`/api/notes/${id}`,{
             'method': "DELETE",
             'headers': {
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                'Authorization':'Bearer ' + String(authToken.access)
             },
             // 'body':JSON.stringify({note})
         })

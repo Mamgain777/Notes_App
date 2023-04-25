@@ -4,15 +4,21 @@ import { Link } from 'react-router-dom'
 
 function Header() {
 
-  
-  const {user,logoutUser} = useContext(AuthContex)
+
+  const { user, logoutUser } = useContext(AuthContex)
   return (
     <div className='app-header'>
-     {user? <>
-     <h1>Hii!{user.username} </h1>
-     <button onClick={logoutUser}>Logout</button>
-     </>
-     : <h1>VOICE NOTES</h1>}
+      {user ? <>
+        <h1>Hii!&ensp;{user.username} </h1>
+        <button onClick={logoutUser}>Logout</button>
+      </>
+        :
+        <>
+          <Link to="/">VOICE NOTES</Link>
+          <Link to="/signUp">SignUp</Link>
+
+        </>
+      }
     </div>
   )
 }

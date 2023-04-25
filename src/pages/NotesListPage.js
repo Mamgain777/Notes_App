@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AddButton from '../components/AddButton'
 import Listitem from '../components/Listitem'
+import AuthContex from '../contex/AuthContex'
 
 function NotesListPage() {
-    console.log("Note List Page is running")
+    // console.log("Note List Page is running")
 
     const [notes, setNotes] = useState([])
+    const {authToken} = useContext(AuthContex)
 
     async function setData(){
-      const response = await fetch("/api/notes")
+      const response = await fetch("/api/notes",{
+        method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':'Bearer ' + String(authToken?.access)
+            }
+      })
       const data = await response.json()
+      
       setNotes(data)
     }
     
